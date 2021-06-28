@@ -19,7 +19,7 @@ class Mon:
     def __str__(self):
 
         if self.coef == 0:
-            return '0'
+            return '+0'
             #return ''
 
         sign = '+' if self.coef > 0 else '-'
@@ -29,3 +29,15 @@ class Mon:
             lett = ''
 
         return sign + f'{abs(self.coef)}' + lett
+
+    def __lt__(self, other):
+        return self.degree < other.degree
+
+    def __gt__(self, other):
+        return self.degree > other.degree
+
+    def __le__(self, other):
+        return self.degree <= other.degree
+
+    def __ge__(self, other):
+        return self.degree >= other.degree
