@@ -7,9 +7,9 @@ class Mon:
     def __init__(self, coef = 1, degree = 1, var = 'x'):
 
         if (abs(coef) <= Mon.MAX_COEF and
-           degree >= 0                and
-           degree <= Mon.MAX_DEG      and
-           var in Mon.VAR_POOL):
+           degree     >= 0            and
+           degree     <= Mon.MAX_DEG  and
+           var        in Mon.VAR_POOL):
             self.coef = coef
             self.degree = degree
             self.var = var
