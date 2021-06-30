@@ -10,7 +10,7 @@ class Pol:
         degrees = [m.degree for m in mon_list]
 
         if (len(set(vars)) == 1 and                  #Controllo variabile uguale
-            len(degrees)   == len(set(degrees))):  #Controllo gradi diversi
+            len(degrees)   == len(set(degrees))):    #Controllo gradi diversi
             self.mon_list = mon_list
             self.ordine = None
         else:
@@ -22,14 +22,16 @@ class Pol:
     def sort(self, reverse=False):
         self.mon_list.sort(reverse=reverse, key = lambda m : m.degree)
         self.ordine = 'DESC' if reverse else 'ASC'
+        return self
 
     def shuffle(self, hard = True):
         """
         hard: Make sure the polynomial is not sorted, default True.
         """
         random.shuffle(self.mon_list)
-        while (self.mon_list == sorted(self.mon_list, key = lambda m : m.degree, reverse=True) or
-               self.mon_list == sorted(self.mon_list, key = lambda m : m.degree, reverse=False)):
-               random.shuffle(self.mon_list)
-               print('hard shuffle')
+        if len(self.mon_list) > 2:
+            while (self.mon_list == sorted(self.mon_list, key = lambda m : m.degree, reverse=True) or
+                   self.mon_list == sorted(self.mon_list, key = lambda m : m.degree, reverse=False)):
+                   random.shuffle(self.mon_list)
         self.ordine = 'SHUFFLE'
+        return self
