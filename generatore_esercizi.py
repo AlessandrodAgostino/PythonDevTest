@@ -27,6 +27,7 @@ def gen_risposte():
     polinomi.append(gen_pol(nF, var=random.choice(list(Mon.VAR_POOL))).shuffle())
 
     risposte = [{'polinomio': p, 'ordine': p.ordine, 'verita': verita_opzione(p)} for p in polinomi]
+    #TODO: Aggiungere campo 'variabile' per snellire la sintassi successiva
     random.shuffle(risposte)
     return risposte
 
@@ -58,3 +59,6 @@ Esercizio = { 'consegna': f'Seleziona i polinomi ordinati rispetto {var_consegna
     'soluzione_guidata' : '\n'.join(paragrafi),
     'risp_corrette_idx' : [i for i,r in enumerate(risposte) if r['verita']]
 }
+
+for v in Esercizio.values():
+    print(v)
