@@ -22,7 +22,7 @@ class Mon:
         var  : Variabile del polinomio che deve appartenere ai caratteri validi
                impostati a livello di classe.                      (Default 'x')
 
-        Solleva:
+        Solleva
         ------------------------------------------------------------------------
         Exception: Se i parametri in input non rispettano le condizioni per la
                 generazione di un monomio.
@@ -30,8 +30,8 @@ class Mon:
 
         if (abs(coef) <= Mon.MAX_COEF and
             coef      != 0            and
-            grado    >= 0            and
-            grado    <= Mon.MAX_DEG  and
+            grado     >= 0            and
+            grado     <= Mon.MAX_DEG  and
             var       in Mon.VAR_POOL):
 
             self.coef = coef
@@ -43,8 +43,10 @@ class Mon:
     def __str__(self):
 
         segno = '+' if self.coef > 0 else '-'
-        if self.grado is not 0:
+        if self.grado > 1:
             lett = self.var + f'^{self.grado}'
+        elif self.grado is 1:
+            lett = self.var
         else:
             lett = ''
 

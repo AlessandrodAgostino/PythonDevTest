@@ -13,13 +13,13 @@ class Pol:
         mon_list: Lista di monomi da controllare. Tutti i gradi devono essere
                 diversi e la variabile deve essere comune.
 
-        Solleva:
+        Solleva
         ------------------------------------------------------------------------
         Exception: Se il paramtero in input non rispetta le condizioni per la
                 generazione di un polinomio.
         """
         vars    = [m.var    for m in mon_list]
-        degrees = [m.degree for m in mon_list]
+        degrees = [m.grado for m in mon_list]
 
         if (len(set(vars)) == 1 and                  #Controllo variabile uguale
             len(degrees)   == len(set(degrees))):    #Controllo gradi diversi
@@ -45,7 +45,7 @@ class Pol:
         ------------------------------------------------------------------------
         self: Il metodo ritorna l'istanza chiamante.
         """
-        self.mon_list.sort(reverse=reverse, key = lambda m : m.degree)
+        self.mon_list.sort(reverse=reverse, key = lambda m : m.grado)
         self.ordine = 'DESC' if reverse else 'ASC'
         return self
 
@@ -61,10 +61,22 @@ class Pol:
         ------------------------------------------------------------------------
         self: Il metodo ritorna l'istanza chiamante.
         """
-        random.shuffle(self.mon_list)
-        if len(self.mon_list) > 2:
-            while (self.mon_list == sorted(self.mon_list, key = lambda m : m.degree, reverse=True) or
-                   self.mon_list == sorted(self.mon_list, key = lambda m : m.degree, reverse=False)):
+
+        l = len(self.mon_list)
+        if   l == 1:
+            pass
+        elif l == 2: # Inverto gli elementi
+            self.mon_list.reverse()
+        elif l == 3: # Cerco l'unica opzione non ordinata
+            while (self.mon_list == sorted(self.mon_list, key = lambda m : m.grado, reverse=True) or
+                   self.mon_list == sorted(self.mon_list, key = lambda m : m.grado, reverse=False)):
                    random.shuffle(self.mon_list)
+        elif l > 3:  # Cerco un'opzione non ordinata diversa da quella iniziale
+            pre_shuffle = self.mon_list.copy()
+            while (self.mon_list == sorted(self.mon_list, key = lambda m : m.grado, reverse=True) or
+                   self.mon_list == sorted(self.mon_list, key = lambda m : m.grado, reverse=False) or
+                   self.mon_list == pre_shuffle):
+                   random.shuffle(self.mon_list)
+
         self.ordine = 'SHUFFLE'
         return self

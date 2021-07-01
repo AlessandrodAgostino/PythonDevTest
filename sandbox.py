@@ -1,4 +1,7 @@
 import random
-import itertools
-from mon import Mon
-from pol import Pol
+import EsGenerator
+
+es = EsGenerator.gen_esercizio()
+
+for p in es.values():
+    print(p)
