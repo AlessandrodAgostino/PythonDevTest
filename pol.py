@@ -3,8 +3,20 @@ import random
 class Pol:
     def __init__(self, mon_list):
         """
-        Controllo che non ci siano monomi di grado ripetuto.
-        Controllo che non ci siano monomi con variabili diverse.
+        Metodo costruttore del singolo polinomio a una singola variabile.
+        Il polinomio è sostanzialmente costituito da una lista di monomi, che
+        deve superare alcuni controlli per garantire la diversità dei gradi e la
+        omogeneità della varaibile.
+
+        Parametri
+        ------------------------------------------------------------------------
+        mon_list: Lista di monomi da controllare. Tutti i gradi devono essere
+                diversi e la variabile deve essere comune.
+
+        Solleva:
+        ------------------------------------------------------------------------
+        Exception: Se il paramtero in input non rispetta le condizioni per la
+                generazione di un polinomio.
         """
         vars    = [m.var    for m in mon_list]
         degrees = [m.degree for m in mon_list]
@@ -17,16 +29,37 @@ class Pol:
             raise Exception('La lista di monomi non soddisfa i requisiti per la creazione del polinomio.')
 
     def __str__(self):
-        return ' '.join([p.__str__() for p in self.mon_list])
+        return ' '.join([str(p) for p in self.mon_list])
 
     def sort(self, reverse=False):
+        """
+        Metodo per l'ordinamento crescente o decrescente della lista di monomi
+        rispetto al loro grado. Se l'operazione va a buon fine viene valorizzato
+        di conseguenza il parametro 'self.ordine' a 'ASC' p 'DESC'.
+
+        Parametri
+        ------------------------------------------------------------------------
+        reverse: Parametro per ordine decrescente del polinomio. (Default False)
+
+        Ritorna
+        ------------------------------------------------------------------------
+        self: Il metodo ritorna l'istanza chiamante.
+        """
         self.mon_list.sort(reverse=reverse, key = lambda m : m.degree)
         self.ordine = 'DESC' if reverse else 'ASC'
         return self
 
-    def shuffle(self, hard = True):
+    def shuffle(self):
         """
-        hard: Make sure the polynomial is not sorted, default True.
+        Metodo per il 'disordinamento' della lista di monomi rispetto al loro
+        grado. Se la lista di monomi ha più di due elementi viene eseguito un
+        ciclo di controllo per assicurarsi che non sia stato raggiunto
+        accidentalmente l'ordinamento del polinomio. Se l'operazione va a buon
+        fine viene valorizzato il parametro 'self.ordine' a 'SHUFFLE'.
+
+        Ritorna
+        ------------------------------------------------------------------------
+        self: Il metodo ritorna l'istanza chiamante.
         """
         random.shuffle(self.mon_list)
         if len(self.mon_list) > 2:
