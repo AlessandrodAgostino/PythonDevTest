@@ -1,7 +1,7 @@
 # PythonDevTest
 
 ## Generatore di Esercizi sui Polinomi Ordinati
-###Alessandro d'Agostino
+### Alessandro d'Agostino
 
 Il progetto è mirato allo sviluppo di un generatore di esercizi basati sul riconoscimento dei polinomi ordinati all'interno di un elenco proposto.
 Il testo degli esercizi è composto da più sezioni: *consegna*, *opzioni*, *risoluzione guidata* e *risposte corrette*. Le sezioni fanno tutte riferimento ad uno stesso set di 6 polinomi generati per ciascun esercizio.
@@ -63,7 +63,7 @@ La funzione ``gen_risposte`` si occupa di generare finalmente le opzioni di risp
 
 La verità o meno della singola opzione di risposta viene valutata tramite l'applicazione della funzione ``verita_opzione``, che funge da *maschera di verità*. In questo caso la funzione (``lambda``) semplicemente verifica l'ordinamento del polinomio. Grazie a questa scelta con l'implementazione di una funzione diversa si potrebbe applicare una maschera di verità alternativa alle opzioni dell'esercizio, permettendo di generare agilmente esercizi analoghi ma dalla consegna diversa. Ad esempio  la traccia:
 
->"Seleziona i polinomio di grado 4°.".
+> Seleziona i polinomio di grado 4°
 
 Una volta che le opzioni di risposta sono state generate segue una routine di comandi per l'effettiva generazione delle stringhe delle diverse sezioni, in cui si fa largo uso della formattazione parametrica delle stringe. A conclusione dello script vengono raccolti tutti i segmenti genenerati ed organizzati in un dizionario come segue:
 
