@@ -41,13 +41,20 @@ class Mon:
             raise Exception('Parametri non corretti per la creazione di un monomio')
 
     def __str__(self):
+        #segno
+        str_mon = '+' if self.coef > 0 else '-'
 
-        segno = '+' if self.coef > 0 else '-'
+        #coef
+        abs_coef = abs(self.coef)
+        if abs_coef > 1:
+            str_mon += str(abs_coef)
+        elif self.grado == 0:
+            str_mon += str(abs_coef)
+
+        #grado
         if self.grado > 1:
-            lett = self.var + f'^{self.grado}'
+            str_mon += self.var + f'^{self.grado}'
         elif self.grado is 1:
-            lett = self.var
-        else:
-            lett = ''
+            str_mon += self.var
 
-        return segno + f'{abs(self.coef)}' + lett
+        return str_mon

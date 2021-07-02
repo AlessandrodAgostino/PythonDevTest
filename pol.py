@@ -29,7 +29,9 @@ class Pol:
             raise Exception('La lista di monomi non soddisfa i requisiti per la creazione del polinomio.')
 
     def __str__(self):
-        return ' '.join([str(p) for p in self.mon_list])
+        str_pol = ' '.join([str(p) for p in self.mon_list])
+        if str_pol[0] is '+': str_pol = str_pol[1:]
+        return str_pol
 
     def sort(self, reverse=False):
         """
