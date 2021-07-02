@@ -132,3 +132,23 @@ def test_str4(coef, grado, var):
     assert v_str[0] == '+'
     assert var not in v_str
     assert '^' not in v_str
+
+@given(coef   = st.sampled_from([-1,1]),
+       grado  = st.integers(min_value=1, max_value=Mon.MAX_DEG),
+       var    = st.sampled_from(list(Mon.VAR_POOL)))
+@settings(max_examples=10)
+def test_str5(coef, grado, var):
+    v = Mon(coef,grado,var)
+    v_str = str(v)
+    assert v_str[0] in {'+', '-'}
+    assert '1' not in v_str
+
+@given(coef   = st.sampled_from([-1,1]),
+       grado  = st.integers(min_value=0, max_value=0),
+       var    = st.sampled_from(list(Mon.VAR_POOL)))
+@settings(max_examples=10)
+def test_str6(coef, grado, var):
+    v = Mon(coef,grado,var)
+    v_str = str(v)
+    assert v_str[0] in {'+', '-'}
+    assert '1' in v_str

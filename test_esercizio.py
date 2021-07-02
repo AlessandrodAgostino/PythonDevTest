@@ -3,16 +3,32 @@ from hypothesis import strategies as st
 from hypothesis import given
 from hypothesis import settings
 
-import EsGenerator
 from mon import Mon
+from esercizio import Esercizio
 
 #%%-----------------------------------------------------------------------------
 #TEST GENERAZIONE RISPOSTE
+#
+# @given(n_ele = st.integers(min_value=0, max_value=0),
+#        var   = st.sampled_from(list(Mon.VAR_POOL)))
+# @settings(max_examples=10)
+# def test_gen_pol(n_ele, var):
+#     es = Esercizio(var)
+#
+#     risposte = es.risposte
+#     asc     = [r for r in risposte if r['ordine'] == 'ASC']
+#     des     = [r for r in risposte if r['ordine'] == 'DESC']
+#     shu     = [r for r in risposte if r['ordine'] == 'SHUFFLE']
+#
+#     assert len(asc) == 2
+#     assert len(des) == 1
+#     assert len(shu) == 3
 
-@given(var   = st.sampled_from(list(Mon.VAR_POOL)))
+@given(var = st.sampled_from(list(Mon.VAR_POOL)))
 @settings(max_examples=10)
 def test_gen_risposte(var):
-    risposte = EsGenerator.gen_risposte(var)
+    es = Esercizio(var)
+    risposte = es.risposte
     asc     = [r for r in risposte if r['ordine'] == 'ASC']
     des     = [r for r in risposte if r['ordine'] == 'DESC']
     shu     = [r for r in risposte if r['ordine'] == 'SHUFFLE']

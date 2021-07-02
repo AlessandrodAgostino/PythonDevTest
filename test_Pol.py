@@ -1,11 +1,20 @@
 import pytest
+import random
 from hypothesis import strategies as st
 from hypothesis import given
 from hypothesis import settings
 
 from pol import Pol
 from mon import Mon
-import EsGenerator
+
+def gen_pol(n_ele, var):
+    coef_range = set(range(-12, 13))
+    coef_range.remove(0)
+
+    coefs   = random.sample(coef_range, n_ele)
+    degrees = random.sample(set(range(Mon.MAX_DEG + 1)), n_ele)
+
+    return Pol([Mon(c,d,var) for c,d in zip(coefs, degrees)])
 
 #%%-----------------------------------------------------------------------------
 #TEST PARAMETRI COSTRUTTORE CORRETTI
@@ -14,7 +23,7 @@ import EsGenerator
        var   = st.sampled_from(list(Mon.VAR_POOL)))
 @settings(max_examples=10)
 def test_good_pol1(n_ele, var):
-    p = EsGenerator.gen_pol(n_ele, var)
+    p = gen_pol(n_ele, var)
     assert p.ordine is None
 
 #%%-----------------------------------------------------------------------------
@@ -25,7 +34,7 @@ def test_good_pol1(n_ele, var):
 @settings(max_examples=10)
 def test_empty_mon_list(n_ele, var):
     with pytest.raises(Exception):
-        p = EsGenerator.gen_pol(n_ele, var)
+        p = gen_pol(n_ele, var)
         assert p.ordine is None
 
 @given(n_ele = st.integers(min_value=7, max_value=10),
@@ -33,7 +42,7 @@ def test_empty_mon_list(n_ele, var):
 @settings(max_examples=10)
 def test_too_many_degrees(n_ele, var):
     with pytest.raises(Exception):
-        p = EsGenerator.gen_pol(n_ele, var)
+        p = gen_pol(n_ele, var)
         assert p.ordine is None
 
 @given(n_ele = st.integers(min_value=1, max_value=Mon.MAX_DEG + 1),
@@ -41,7 +50,7 @@ def test_too_many_degrees(n_ele, var):
 @settings(max_examples=10)
 def test_wrong_var(n_ele, var):
     with pytest.raises(Exception):
-        p = EsGenerator.gen_pol(n_ele, var)
+        p = gen_pol(n_ele, var)
         assert p.ordine is None
 
 #%%-----------------------------------------------------------------------------
@@ -51,11 +60,15 @@ def test_wrong_var(n_ele, var):
        var   = st.sampled_from(list(Mon.VAR_POOL)))
 @settings(max_examples=10)
 def test_str_pol1(n_ele, var):
-    p = EsGenerator.gen_pol(n_ele, var)
-    p_str = str(p)
+    p = gen_pol(n_ele, var)
+    p_str = p.__str__()
     assert p_str.count(var) <= n_ele
     assert p_str.count(var) >= n_ele - 1
-    assert p_str.count('+') + p_str.count('-') == n_ele
+
+    if p_str[0] is '+':
+        assert p_str.count('+') + p_str.count('-') == n_ele -1
+    else:
+        assert p_str.count('+') + p_str.count('-') == n_ele
     assert p_str.count(' ') == n_ele -1
 
 #%%-----------------------------------------------------------------------------
@@ -65,7 +78,7 @@ def test_str_pol1(n_ele, var):
        var   = st.sampled_from(list(Mon.VAR_POOL)))
 @settings(max_examples=10)
 def test_sort(n_ele, var):
-    p = EsGenerator.gen_pol(n_ele, var)
+    p = gen_pol(n_ele, var)
     assert p.ordine is None
     post1_sort  = p.sort().mon_list.copy()
     post2_sort  = p.sort().mon_list
@@ -81,7 +94,7 @@ def test_sort(n_ele, var):
        var   = st.sampled_from(list(Mon.VAR_POOL)))
 @settings(max_examples=10)
 def test_diff_sort(n_ele, var):
-    p = EsGenerator.gen_pol(n_ele, var)
+    p = gen_pol(n_ele, var)
     assert p.ordine is None
     post1_sort  = p.sort().mon_list.copy()
     assert p.ordine is 'ASC'
@@ -96,7 +109,7 @@ def test_diff_sort(n_ele, var):
        var   = st.sampled_from(list(Mon.VAR_POOL)))
 @settings(max_examples=10)
 def test_shuffle1(n_ele, var):
-    p = EsGenerator.gen_pol(n_ele, var)
+    p = gen_pol(n_ele, var)
     assert p.ordine is None
     post_shuffle = p.shuffle().mon_list.copy()
     post_sort    = p.sort().mon_list.copy()
@@ -108,7 +121,7 @@ def test_shuffle1(n_ele, var):
        var   = st.sampled_from(list(Mon.VAR_POOL)))
 @settings(max_examples=10)
 def test_shuffle2(n_ele, var):
-    p = EsGenerator.gen_pol(n_ele, var)
+    p = gen_pol(n_ele, var)
     assert p.ordine is None
     pre_shuffle  = p.mon_list.copy()
     post_shuffle = p.shuffle().mon_list.copy()
@@ -123,7 +136,7 @@ def test_shuffle2(n_ele, var):
        var   = st.sampled_from(list(Mon.VAR_POOL)))
 @settings(max_examples=10)
 def test_shuffle3(n_ele, var):
-    p = EsGenerator.gen_pol(n_ele, var)
+    p = gen_pol(n_ele, var)
     assert p.ordine is None
     pre_shuffle  = p.mon_list.copy()
     post_shuffle = p.shuffle().mon_list.copy()
@@ -133,7 +146,7 @@ def test_shuffle3(n_ele, var):
        var   = st.sampled_from(list(Mon.VAR_POOL)))
 @settings(max_examples=10)
 def test_shuffle4(n_ele, var):
-    p = EsGenerator.gen_pol(n_ele, var)
+    p = gen_pol(n_ele, var)
     assert p.ordine is None
     pre_shuffle  = p.mon_list.copy()
     post_shuffle = p.shuffle().mon_list.copy()
