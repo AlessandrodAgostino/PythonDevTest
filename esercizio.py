@@ -21,8 +21,10 @@ class Esercizio:
 
         if seed is None:
             self.seed = random.randint(0,1e6+1)
-        else:
+        elif isinstance(seed, int):
             self.seed = seed
+        else:
+            raise Exception("Il seed non è di tipo 'int'.")
 
         random.seed(self.seed)
 
