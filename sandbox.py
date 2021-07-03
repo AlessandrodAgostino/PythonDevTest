@@ -1,7 +1,7 @@
 import random
-import EsGenerator
+import os
+from esercizio import Esercizio
 
-es = EsGenerator.gen_esercizio()
-
-for p in es.values():
-    print(p)
+seed = 123
+es = Esercizio('b', seed)
+es.to_txt()
