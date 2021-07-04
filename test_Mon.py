@@ -24,7 +24,7 @@ def test_good_par2(coef, grado, var):
 #%%-----------------------------------------------------------------------------
 #TEST PARAMETRI COSTRUTTORE ERRATI
 
-@given(coef   = st.integers(min_value= Mon.MAX_COEF +1, max_value=2 * Mon.MAX_COEF),
+@given(coef   = st.integers(min_value=Mon.MAX_COEF+1, max_value=2*Mon.MAX_COEF),
        grado  = st.integers(min_value=0, max_value=Mon.MAX_DEG),
        var    = st.sampled_from(list(Mon.VAR_POOL)))
 @settings(max_examples=10)
@@ -32,7 +32,7 @@ def test_bad_coef1(coef, grado, var):
     with pytest.raises(Exception):
         v = Mon(coef,grado,var)
 
-@given(coef   = st.integers(min_value= -2 * Mon.MAX_COEF, max_value= -1 * Mon.MAX_COEF -1),
+@given(coef   = st.integers(min_value=-2*Mon.MAX_COEF, max_value=-1*Mon.MAX_COEF-1),
        grado  = st.integers(min_value=0, max_value=Mon.MAX_DEG),
        var    = st.sampled_from(list(Mon.VAR_POOL)))
 @settings(max_examples=10)
@@ -49,7 +49,7 @@ def test_bad_coef3(coef, grado, var):
         v = Mon(coef,grado,var)
 
 @given(coef   = st.integers(min_value=-1*Mon.MAX_COEF, max_value=Mon.MAX_COEF),
-       grado  = st.integers(min_value=Mon.MAX_DEG +1, max_value= 2 * Mon.MAX_DEG),
+       grado  = st.integers(min_value=Mon.MAX_DEG+1, max_value=2*Mon.MAX_DEG),
        var    = st.sampled_from(list(Mon.VAR_POOL)))
 @settings(max_examples=10)
 def test_bad_grad1(coef, grado, var):
@@ -57,7 +57,7 @@ def test_bad_grad1(coef, grado, var):
         v = Mon(coef,grado,var)
 
 @given(coef   = st.integers(min_value=-1*Mon.MAX_COEF, max_value=Mon.MAX_COEF),
-       grado  = st.integers(min_value= -2 * Mon.MAX_DEG, max_value= -1),
+       grado  = st.integers(min_value=-2*Mon.MAX_DEG, max_value=-1),
        var    = st.sampled_from(list(Mon.VAR_POOL)))
 @settings(max_examples=10)
 def test_bad_grad2(coef, grado, var):

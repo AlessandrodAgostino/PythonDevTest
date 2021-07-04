@@ -20,7 +20,7 @@ class Mon:
         grado: Grado del monomio che deve rispettare le condizioni impostate a
                livello di classe.                                    (Default 1)
         var  : Variabile del polinomio che deve appartenere ai caratteri validi
-               impostati a livello di classe.                      (Default 'x')
+               a livello di classe.                                (Default 'x')
 
         Solleva
         ------------------------------------------------------------------------
@@ -38,7 +38,7 @@ class Mon:
             self.grado = grado
             self.var = var
         else:
-            raise Exception('Parametri non corretti per la creazione di un monomio')
+            raise Exception('Parametri non corretti per la creazione di un monomio.')
 
     def __str__(self):
         #segno

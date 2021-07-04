@@ -7,15 +7,16 @@ from pol import Pol
 class Esercizio:
     def __init__(self, var = 'x', seed = None):
         """
-        Metodo costruttore dell'esercizio secondo le precise condizioni della
+        Metodo costruttore dell'esercizio secondo le precise indicazioni della
         traccia.
 
         Parametri
         ------------------------------------------------------------------------
-        var  : Variabile comune dei 6 polinomi generati per l'esercizio.
+        var : Variabile comune dei sei polinomi generati per l'esercizio.
                                                                    (Default 'x')
-        seed : Seed usato per la classe 'random' per garantire la riproducibilità
-            dell'esercizio. Se vuoto viene generato un seed randomico.
+        seed: Seed usato per il modulo 'random' per garantire la riproducibilità
+            dell'esercizio. Se assente viene generato e assegnato un seed random
+            intero nell'intervallo [0, 1e6].
                                                                   (Default None)
         """
 
@@ -94,7 +95,8 @@ class Esercizio:
 
         Parametri
         ------------------------------------------------------------------------
-        n_ele: Numero di elementi del polinomio
+        n_ele: Numero di elementi del polinomio.
+        var  : La variabile dei polinomi del polinomio.
 
         Ritorna
         ------------------------------------------------------------------------
@@ -113,11 +115,18 @@ class Esercizio:
             degrees = random.sample(set(range(Mon.MAX_DEG + 1)), n_ele)
 
         else:
-            raise Exception('I parametri non soddisfno i requisiti per la creazione del polinomio.')
+            raise Exception('I parametri non soddisfano i requisiti per la creazione del polinomio.')
 
         return Pol([Mon(c,d,var) for c,d in zip(coefs, degrees)])
 
     def to_txt(self, path='.'):
+        """
+        Funzione che salva in formato '.txt' il testo dell'esercizio generato.
+
+        Parametri
+        ------------------------------------------------------------------------
+        path: Percorso di salvataggio del file.
+        """
         filename = 'espolord_' + self.var + str(self.seed)
         filepath = os.path.join(path, filename + ".txt")
 

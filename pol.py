@@ -37,7 +37,7 @@ class Pol:
         """
         Metodo per l'ordinamento crescente o decrescente della lista di monomi
         rispetto al loro grado. Se l'operazione va a buon fine viene valorizzato
-        di conseguenza il parametro 'self.ordine' a 'ASC' p 'DESC'.
+        di conseguenza il parametro 'self.ordine' ad 'ASC' o 'DESC'.
 
         Parametri
         ------------------------------------------------------------------------
@@ -54,10 +54,11 @@ class Pol:
     def shuffle(self):
         """
         Metodo per il 'disordinamento' della lista di monomi rispetto al loro
-        grado. Se la lista di monomi ha più di due elementi viene eseguito un
-        ciclo di controllo per assicurarsi che non sia stato raggiunto
-        accidentalmente l'ordinamento del polinomio. Se l'operazione va a buon
-        fine viene valorizzato il parametro 'self.ordine' a 'SHUFFLE'.
+        grado. Se il polinomio ha due elementi viene restituito l'ordine opposto
+        a quello di partenza. Se la lista di monomi ha più di due elementi viene
+        eseguito un ciclo di controllo per assicurarsi che non sia stato
+        raggiunto accidentalmente l'ordinamento del polinomio. Se l'operazione
+        va a buon fine viene valorizzato il parametro 'self.ordine' a 'SHUFFLE'.
 
         Ritorna
         ------------------------------------------------------------------------
