@@ -1,0 +1,25 @@
+Seleziona i polinomi ordinati rispetto b:
+
+	o -12b^3 +b^4 +3 -5b^2
+	o 8b^4 -2b^3 -7b +11
+	o 5b^3 +10b^5 +b^4
+	o 9 +4b^3
+	o -7b +2b^2 +11b^5
+	o 10b +2b^3 -8 +11b^2
+
+Un polinomio è ordinato rispetto a una lettera se i suoi termini sono ordinati secondo le potenze crescenti
+(o decrescenti) di quella lettera: devi escludere i polinomi in cui gli esponenti di b non sono in ordine
+crescente o decrescente.
+Escludi quindi:
+	o -12b^3 +b^4 +3 -5b^2
+	o 5b^3 +10b^5 +b^4
+	o 10b +2b^3 -8 +11b^2
+I polinomi:
+	o 9 +4b^3
+	o -7b +2b^2 +11b^5
+sono ordinati secondo le potenze crescenti di b.
+Infine, il polinomio:
+	o 8b^4 -2b^3 -7b +11
+è ordinato secondo le potenze decrescenti di b.
+
+Risposte corrette: [1, 3, 4]

@@ -17,6 +17,17 @@ Le 6 risposte proposte dall'esercizio seguono invece la seguente struttura:
 * 2 risposte *esatte*, corrispondenti a polinomi ordinati in maniera crescente.
 * 1 risposte *esatta*, corrispondente ad un polinomio ordinato in maniera decrescente.
 
+###### Esempio di utilizzo:
+
+Il seguente codice importa la classe ``Esercizio`` e salva un file ``.txt`` contenente il testo dell'esercizio generato specificando la variabile e il seed all'interno della cartella ``Generated``.
+
+```
+from esercizio import Esercizio
+
+es = Esercizio(var = 'b', seed = 123)
+es.to_txt(path = 'Generated')
+```
+
 ###### Esempio di esercizio generato:
 ```
 Seleziona i polinomi ordinati rispetto b:
@@ -105,6 +116,3 @@ Il metodo ``to_txt`` implementa una funzionalità ulteriore a quelle richieste n
 #### Scrittura dei test
 
 Tutte i metodi di tutte le classi implementate sono stati sottoposti a test unitario. Per la scrittura dei test è stato usato il framework ``pytest``.
-
-### Migliorie
-* Struttura file del progetto.
