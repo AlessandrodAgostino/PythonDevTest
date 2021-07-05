@@ -15,13 +15,13 @@ I polinomi vengono generati secondo alcune precise specifiche, in particolare:
 Le 6 risposte proposte dall'esercizio seguono invece la seguente struttura:
 * 3 risposte *errate*, corrispondenti a polinomi non ordinati.
 * 2 risposte *esatte*, corrispondenti a polinomi ordinati in maniera crescente.
-* 1 risposte *esatta*, corrispondente ad un polinomio ordinato in maniera decrescente.
+* 1 risposta *esatta*, corrispondente ad un polinomio ordinato in maniera decrescente.
 
-Tutto il codice necessario alla generazione degli esercizi è contenuto interamente in questa repository insieme con i test per il controllo del suo funzionamento.
+Tutto il codice necessario alla generazione degli esercizi è contenuto in questa repository insieme con i test per il controllo del suo funzionamento.
 
 ###### Esempio di utilizzo:
 
-All'interno del file ``TRYME.py`` è riportato un esempio di utilizzo del codice. All'interno dello script viene importata la classe ``Esercizio``, costruita una sua instanza e infine esportato il testo dell'esercizio in formato ``.txt`` nella cartella ``esercizi_generati``. Il nome del file contiene il riferimento all'incognita ``var`` e al ``seed`` di generazione che identificano univocamente l'esercizio generato.
+All'interno del file ``TRYME.py`` è riportato un esempio di utilizzo del codice. Nello script viene importata la classe ``Esercizio``, costruita una sua istanza e infine esportato il testo dell'esercizio in formato ``.txt`` nella cartella ``esercizi_generati``. Il nome del file contiene il riferimento all'incognita ``var`` e al ``seed`` di generazione che identificano univocamente l'esercizio generato.
 
 ```
 from esercizio import Esercizio
@@ -66,18 +66,18 @@ Risposte corrette: [1, 3, 4]
 ```
 
 È importante notare come i polinomi coinvolti siano:
-* Ad una singola incognita: per cui nella parte letterale di ciscun monomio compare la stessa e unica lettera.
+* Ad una singola incognita: per cui nella parte letterale di ciascun monomio compare la stessa e unica lettera.
 * In forma normale: per cui non ci sono più termini con la stessa parte letterale e il polinomio non può essere ulteriormente semplificato.
 
 La mancanza di questi vincoli avrebbe complicato lo sviluppo delle classi necessarie per lo sviluppo del generatore.
 
-### Implementazione
+### Dettagli di Implementazione
 
 Il fulcro del progetto è la classe ``Esercizio`` che si occupa di generare, custodire e salvare il testo dell'esercizio generato. Tutta la logica di generazione è invece basata sulle classi ``Mon`` e ``Pol``, create rispettivamente per rappresentare i monomi e le loro collezioni, cioè i polinomi. Qualora possibile è sempre stato preferito l'utilizzo di funzionalità già presenti nelle librerie standard di Python all'utilizzo di pacchetti di terze parti o all'implementazione ex novo.
 
 #### Classe Mon
 
-La classe ``Mon`` rappresenta il singolo monomio ad una sola incognita. Sono presenti come attributi di classe i vincoli a coefficienti, gradi e caratteri delle incognite, in ottica di un ipotetio riutilizzo in un'altra situazione. I vincoli imposti sembrano infatti piuttosto generali ed orientati alla leggibilità dell'esercizio prodotto, senza compromettere la ricchezza dei casi possibili. La presenza di questi parametri a livello di classe facilita inoltre la scrittura di test parametrici.
+La classe ``Mon`` rappresenta il singolo monomio ad una sola incognita. Sono presenti come attributi di classe i vincoli a coefficienti, gradi e caratteri delle incognite, in ottica di un ipotetico riutilizzo in un'altra situazione. I vincoli imposti sembrano infatti piuttosto generali ed orientati alla leggibilità dell'esercizio prodotto, senza compromettere la ricchezza dei casi possibili. La presenza di questi parametri a livello di classe facilita inoltre la scrittura di test parametrici.
 
 Sono stati implementati dei controlli sui coefficienti all'interno del costruttore della classe ``Mon`` per verificare il rispetto dei vincoli di classe. Inoltre in questi controlli si esclude il valore ``0`` tra i coefficienti ammessi, che ha sì validità matematica, ma scarsa utilità per questo tipo di applicazioni. In caso di violazione dei controlli si solleva una ``Exception`` per bloccare l'esecuzione e inoltrare un messaggio di errore.
 
@@ -87,30 +87,30 @@ Il metodo ``__str__`` è stato implementato per gestire agilmente la stampa del 
 
 La classe ``Pol`` rappresenta il singolo polinomio ad incognita omogenea e la sua proprietà di ordinamento. Sostanzialmente un polinomio può essere pensato come una lista di singoli monomi. L'implementazione della classe tuttavia è indipendente dalla classe ``Mon``, rendendo possibile un suo riutilizzo con classi di monomi alternative con caratteristiche diverse.
 
-L'attributo principale di ciscuna istanza è una lista di monomi che viene manipolata da tutti gli altri metodi. Il metodo costruttore prende in input tale lista e controlla che tutti i monomi abbiano la stessa parte letterale e che non ci siano termini con lo stesso grado. Se il controllo fallisce viene lanciata una ``Exception`` per bloccare l'esecuzione e inoltrato messaggio di errore.
+L'attributo principale di ciascuna istanza è una lista di monomi che viene manipolata da tutti gli altri metodi. Il metodo costruttore prende in input tale lista e controlla che tutti i monomi abbiano la stessa parte letterale e che non ci siano termini con lo stesso grado. Se il controllo fallisce viene lanciata una ``Exception`` per bloccare l'esecuzione e viene inoltrato messaggio di errore.
 
 Essendo l'esercizio da generare improntato sull'ordinamento dei polinomi è stato aggiunto un attributo di istanza per rendere disponibile tale informazione. L'attributo ``ordine`` viene inizializzato a ``None`` dal costruttore e viene modificato solo dai metodi della classe che manipolano l'ordine dei monomi nella lista del polinomio. I valori ammessi per l'attributo sono ``{'ASC', 'DESC', 'SHUFFLE'}``.
 
-Il metodo ``sort`` implementa l'ordinamento dei polinomi in ordine crescente o decrescente, ed è basato sostanzialmente sul metodo ``list.sort``. La funzione di chiave per l'ordinamente è una funzione ``lambda`` che estrae il valore del grado del singolo monomio, demandandone l'eventuale calcolo alla classe che rappresenta il monomio. Viene mantenuta la possibilità di passare il parametro ``reverse`` per l'ordinamente inverso. A seguito dell'ordinamento, a seconda del parametro ``reverse`` viene valorizzato l'attributo ``ordine`` con i valori ``'ASC' o 'DESC'``. Una modifica importante rispetto al metodo ``list.sort`` è l'aggiunta della clausola di ``return`` per la restituzione dell'istanza chiamante, permettendo l'utilizzo a cascata del metodo.
+Il metodo ``sort`` implementa l'ordinamento dei polinomi in ordine crescente o decrescente, ed è basato sostanzialmente sul metodo ``list.sort``. La funzione di chiave per l'ordinamento è una funzione ``lambda`` che estrae il valore del grado del singolo monomio, demandando l'eventuale calcolo alla classe che rappresenta il monomio. Viene mantenuta la possibilità di passare il parametro ``reverse`` per l'ordinamento inverso. A seguito dell'ordinamento, a seconda del parametro ``reverse``, viene valorizzato l'attributo ``ordine`` con i valori ``'ASC' o 'DESC'``. Una modifica importante rispetto al metodo ``list.sort`` è l'aggiunta della clausola di ``return`` per la restituzione dell'istanza chiamante, permettendo così l'utilizzo a cascata del metodo.
 
-Il metodo ``shuffle`` implementa il *disordinamento* del polinomio, mescolando i termini e assicurandosi che non sia ordinato prima di restituirlo. Il metodo è basato a sua volta sul metodo ``random.shuffle`` per il mescolamento degli elementi di una lista. Nel caso la lunghezza della lista sia maggiore di 2 viene eseguito un loop di controllo per assicurarsi che il mescolamento non produca accidentalmente polinomi ordinati. Ciò comporterebbe incoerenze nella generazione delle risposte vere e false, compromettendo il senso del testo dell'esercizio. A seguito dell'ordinamento viene valorizzato  l'attributo ``ordine`` a ``'SHUFFLE'``. Anche a questo metodo è stata aggiunta la clausola di ``return`` per la restituzione dell'istanza chiamante, permettendo l'utilizzo a cascata del metodo.
+Il metodo ``shuffle`` implementa il *disordinamento* del polinomio, mescolando i termini e assicurandosi che non sia ordinato prima di restituirlo. Il metodo è basato a sua volta sul metodo ``random.shuffle`` per il mescolamento degli elementi di una lista. Nel caso la lunghezza della lista sia maggiore di 2 viene eseguito un loop di controllo per assicurarsi che il mescolamento non produca accidentalmente polinomi ordinati. Ciò comporterebbe incoerenze nella generazione delle risposte vere e false, compromettendo il senso del testo dell'esercizio. A seguito dell'ordinamento viene valorizzato  l'attributo ``ordine`` a ``'SHUFFLE'``. Anche a questo metodo è stata aggiunta la clausola di ``return`` per la restituzione dell'istanza chiamante, permettendo in questo modo l'utilizzo a cascata del metodo.
 
 Il metodo ``__str__`` implementa la stampa del polinomio unendo le conversioni a stringa dei singoli monomi della lista.
 
 #### Classe Esercizio
 
-La classe ``Esercizio`` è il contenitore delle quattro sezioni *consegna*, *opzioni*, *risoluzione guidata* e *risposte corrette* che compongono ogni esercizio e si occupa della loro generazione e salvataggio. I due parametri di input del costruttore sono l'incognita ``var`` dei polinomi dell'esercizio e il valore di seed per impostare lo stato del generatore di numeri pseudo-random. È stato introdotto l'attributo ``seed`` per regolare il meccanismo di riproducibilità dell'esercizio, come buona norma in ogni procedura di generazione. In questa maniera è possibile etichettare in modo univoco il singolo esercizio con la coppia ``(var, seed)``. Sempre all'interno del costruttore le quattro sezioni vengono popolate sfruttando la formattazione parametrica delle stringhe a partire dal testo a disposizione nella traccia.
+La classe ``Esercizio`` è il contenitore delle quattro sezioni (*consegna*, *opzioni*, *risoluzione guidata* e *risposte corrette*) che compongono ogni esercizio e si occupa della loro generazione e salvataggio. I due parametri di input del costruttore sono l'incognita ``var`` dei polinomi dell'esercizio e il valore di seed per impostare lo stato del generatore di numeri pseudo-random. È stato introdotto l'attributo ``seed`` per regolare il meccanismo di riproducibilità dell'esercizio, come buona norma in ogni procedura di generazione. In questa maniera è possibile etichettare in modo univoco il singolo esercizio con la coppia ``(var, seed)``. Sempre all'interno del costruttore le quattro sezioni vengono popolate sfruttando la formattazione parametrica delle stringhe a partire dal testo a disposizione nella traccia.
 
-Il metodo ``gen_pol`` è responsabile della generazione di polinomi secondo i criteri dell'esercizio a partire dai parametri in input per il numero di monomi e l'incognita del polinomio. Il metodo restituisce una istanza della classe ``Pol``.
+Il metodo ``gen_pol`` è responsabile della generazione di polinomi secondo i criteri dell'esercizio a partire dai parametri in input per il numero di monomi e l'incognita del polinomio. Il metodo restituisce un'istanza della classe ``Pol``.
 
-Il metodo ``gen_risposte`` genera invece le opzioni di risposta del'esercizio. Vengono generati prima i 6 valori che regolano il numero di elementi di ciascun polinomio, secondo le indicazioni della traccia, e poi i polinomi con il corrispondente ordinamento. Le risposte vengono mescolate e salvate nell'attributo dedicato ``risposte`` sottoforma di lista di dizionari composti dal polinomio di ciascuna opzione, il suo ordinamente e la sua verità:
+Il metodo ``gen_risposte`` genera invece le opzioni di risposta dell'esercizio. Vengono generati prima i 6 valori che regolano il numero di elementi di ciascun polinomio, secondo le indicazioni della traccia, infine i polinomi con il corrispondente ordinamento. Le risposte vengono mescolate e salvate nell'attributo dedicato ``risposte`` sotto forma di lista di dizionari composti dal polinomio di ciascuna opzione, il suo ordinamento e la sua verità:
 
 ```
 [{'polinomio': +1y^3 +7y^5,
   'ordine'   : 'ASC',
   'verita'   : True }, ...]
 ```
-La verità o meno della singola opzione di risposta viene valutata tramite l'applicazione della funzione ``verita_opzione``, che funge da *maschera di verità*. In questo caso la funzione ``lambda p: p.ordine in {'ASC', 'DESC'}`` semplicemente verifica l'ordinamento del polinomio tramite una condizione sul parametro di ordine. Grazie a questa scelta con l'implementazione di una funzione diversa si potrebbe applicare una maschera di verità alternativa alle opzioni dell'esercizio, permettendo di generare agilmente esercizi analoghi ma dalla consegna diversa. Ad esempio, la funzione ``lambda p: max([m.grado for m in p.mon_list]) is 4`` permetterebbe di generare esercizi per l'ipotetica traccia:
+La verità o meno della singola opzione di risposta viene valutata tramite l'applicazione della funzione ``verita_opzione``, che funge da *maschera di verità*. In questo caso la funzione ``lambda p: p.ordine in {'ASC', 'DESC'}`` semplicemente verifica l'ordinamento del polinomio tramite una condizione sul parametro di ordine. Grazie a questa scelta, con l'implementazione di una funzione diversa, si potrebbe applicare una maschera di verità alternativa alle opzioni dell'esercizio. Ciò permetterebbe di generare agilmente esercizi analoghi, ma dalla consegna diversa. Ad esempio, la funzione ``lambda p: max([m.grado for m in p.mon_list]) is 4`` permetterebbe di generare esercizi per l'ipotetica traccia:
 
 > Seleziona i polinomio di grado 4°
 
@@ -120,7 +120,7 @@ Il metodo ``to_txt`` implementa una funzionalità ulteriore a quelle richieste n
 
 #### Scrittura dei test
 
-Tutte i metodi di tutte le classi implementate sono stati sottoposti a test unitario. Per la scrittura dei test sono stati usati i framework ``pytest`` e ``hypothesis``. Per la corretta esecuzione dei test quindi è necessario prima installare le dipendenze richieste contenute nel file ``test_requirements.txt`` con il comando:
+Tutte i metodi di tutte le classi implementate sono stati sottoposti a test unitario. Per la scrittura dei test sono stati usati i framework ``pytest`` e ``hypothesis``. Per la corretta esecuzione dei test quindi è necessario installare precedentemente le dipendenze richieste contenute nel file ``test_requirements.txt`` tramite il comando:
 ```
 pip install -r test_requirements.txt
 ```
