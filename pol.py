@@ -30,7 +30,7 @@ class Pol:
 
     def __str__(self):
         str_pol = ' '.join([str(p) for p in self.mon_list])
-        if str_pol[0] is '+': str_pol = str_pol[1:]
+        if str_pol[0] == '+': str_pol = str_pol[1:]
         return str_pol
 
     def sort(self, reverse=False):

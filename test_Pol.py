@@ -69,10 +69,10 @@ def test_str_pol1(n_ele, var):
     assert p_str.count(var) <= n_ele
     assert p_str.count(var) >= n_ele -1
 
-    if p_str[0] is '-':
+    if p_str[0] == '-':
         assert p_str.count('+') + p_str.count('-') == n_ele
     else:
-        assert p_str[0] is not '-'
+        assert p_str[0] != '-'
         assert p_str.count('+') + p_str.count('-') == n_ele -1
     assert p_str.count(' ') == n_ele -1
 

@@ -120,4 +120,7 @@ Il metodo ``to_txt`` implementa una funzionalità ulteriore a quelle richieste n
 
 #### Scrittura dei test
 
-Tutte i metodi di tutte le classi implementate sono stati sottoposti a test unitario. Per la scrittura dei test è stato usato il framework ``pytest``.
+Tutte i metodi di tutte le classi implementate sono stati sottoposti a test unitario. Per la scrittura dei test sono stati usati i framework ``pytest`` e ``hypothesis``. Per la corretta esecuzione dei test quindi è necessario prima installare le dipendenze richieste contenute nel file ``test_requirements.txt`` con il comando:
+```
+pip install -r test_requirements.txt
+```

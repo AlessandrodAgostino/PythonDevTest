@@ -54,7 +54,7 @@ class Mon:
         #grado
         if self.grado > 1:
             str_mon += self.var + f'^{self.grado}'
-        elif self.grado is 1:
+        elif self.grado == 1:
             str_mon += self.var
 
         return str_mon
